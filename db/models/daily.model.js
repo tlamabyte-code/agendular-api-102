@@ -27,7 +27,7 @@ const DailySchema = {
     },
     timestamp: {
         allowNull: false,
-        type: DataTypes.INTEGER,
+        type: DataTypes.BIGINT,
         field: 'daily_timestamp',
         defaultValue: () => Math.floor(Date.now())
     }
