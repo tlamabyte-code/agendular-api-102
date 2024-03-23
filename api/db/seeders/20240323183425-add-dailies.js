@@ -1,5 +1,5 @@
 'use strict';
-const { DAILY_TABLE } = require('./../models/daily.model')
+const { DAILY_TABLE } = require('../models/daily.model')
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
