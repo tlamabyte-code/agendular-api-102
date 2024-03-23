@@ -1,10 +1,18 @@
 const express = require('express')
+const cors = require('cors')
 const routerAPI = require('./routes')
+const loggerHandler = require('./middlewares/logger.middleware')
+const { errorHandler } = require('./middlewares/errors.middleware')
 
 const app = express()
 const PORT = 3000
 
+// Middleware que analiza el cuerpo de las solicitudes
+// convierte la data de formato JSON a objeto de JS
+// y es accesible por medio req.body
 app.use(express.json())
+
+app.use(cors())
 
 app.get('/', (req, res) => {
     // req. request
@@ -14,6 +22,11 @@ app.get('/', (req, res) => {
 })
 
 routerAPI(app)
+
+// Middlewares después del enrutamiento 
+// para tratar con las solicitudes de los clientes
+app.use(loggerHandler)
+app.use(errorHandler)
 
 // Endpoint para visualizar los query-params de un request
 // app.get('/query', (req, res) => {

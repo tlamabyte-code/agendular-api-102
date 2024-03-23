@@ -29,7 +29,7 @@ const DailySchema = {
         allowNull: false,
         type: DataTypes.INTEGER,
         field: 'daily_timestamp',
-        defaultValue: () => Math.floor(Date.now() / 1000)
+        defaultValue: () => Math.floor(Date.now())
     }
 }
 

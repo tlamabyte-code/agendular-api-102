@@ -10,7 +10,7 @@ class DailiesService {
         // Utilizar findAll de ORM Sequelize (dev07)
         const dailies = await models.Daily.findAll({
             order: [
-                ['timestamp', 'DESC']
+                ['id', 'DESC']
             ]
         })
         return dailies

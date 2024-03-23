@@ -1,23 +1,28 @@
 const express = require("express")
-const DailiesService = require('../services/dailies.service')
+const DailiesService = require('../services/dailies.service');
+const { schemaValidatorHandler } = require("../middlewares/validators.middleware");
+const { createDailySchema } = require("../schemas/daily.schema");
 
 const router = express.Router(); // Router
 const service = new DailiesService(); // Dailies Service
 
-router.get("/",  async (req, res) => {
-    const dailies = await service.all(); 
-    res.status(200).json(dailies)
+router.get("/",  async (req, res, next) => {
+    try {
+        const dailies = await service.all(); 
+        res.status(200).json(dailies)
+    } catch(error) {
+        next(error)
+    }
 });
 
 // Crear nuevo daily con sequelize ORM (dev07)
-router.post("/", async (req, res) => {
+router.post("/", schemaValidatorHandler(createDailySchema, "body"), async (req, res, next) => {
     try {
         const body = req.body
         const newDaily = await service.create(body)
         res.status(201).json(newDaily)
     } catch(error) {
-        console.log('error', error)
-        res.status(403).send("Formato Incorrecto")
+        next(error)
     }
 });
 
